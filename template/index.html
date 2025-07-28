@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ML API</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Pacifico|Arimo|Hind:300|Open+Sans+Condensed:300" rel="stylesheet" type="text/css">
+
+    <!-- External CSS (if any) -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+    <style>
+    body {
+        background-image: url("farm.jpg");
+        background-size: cover;
+        background-position: center;
+        font-family: 'Arimo', sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+.login {
+    background: rgba(255, 255, 255, 0.15); /* Lighter glass */
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    width: 400px;
+    text-align: center;
+    color: #ffffff;
+}
+
+
+    h1 {
+        font-family: 'Pacifico', cursive;
+        font-size: 28px;
+        margin-bottom: 30px;
+        color: #333;
+    }
+
+input {
+    width: 100%;
+    padding: 12px 15px;
+    margin: 10px 0;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 14px;
+    background-color: #f9f9f9;
+    transition: all 0.3s ease;
+    outline: none;
+    position: relative;
+}
+
+/* Hover effect */
+input:hover {
+    background-color: #f1f1f1;
+    border-color: #999;
+}
+
+/* Focus effect */
+input:focus {
+    border-color: #4CAF50;
+    background-color: #fff;
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.3);
+    transform: scale(1.01);
+}
+
+/* Optional: Add placeholder animation on focus (cool lift) */
+input::placeholder {
+    color: #999;
+    transition: transform 0.2s ease, font-size 0.2s ease;
+}
+
+input:focus::placeholder {
+    transform: translateY(-8px);
+    font-size: 12px;
+    color: #4CAF50;
+}
+
+
+    button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 12px 30px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 20px;
+        width: 100%;
+        transition: all 0.3s ease;
+        transform: scale(1);
+    }
+
+    /* Hover effect */
+    button:hover {
+        background-color: #45a049;
+        transform: scale(1.05);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Active/click effect */
+    button:active {
+        transform: scale(0.97);
+        background-color: #3e8e41;
+    }
+
+    /* After-click pulse animation (applies when button gets class 'clicked') */
+    button.clicked {
+        animation: pulse 1s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+        0% {
+            transform: scale(1);
+            box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7);
+        }
+        70% {
+            transform: scale(1.03);
+            box-shadow: 0 0 0 10px rgba(76, 175, 80, 0);
+        }
+        100% {
+            transform: scale(1);
+            box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
+        }
+    }
+
+    #pred1 {
+        margin-top: 30px;
+        font-weight: bold;
+        font-size: 18px;
+        color: #222;
+    }
+</style>
+
+</head>
+<body>
+    <div class="login">
+        <h1>Crop Prediction Model</h1>
+
+        <form action="{{ url_for('predict') }}" method="post">
+            <input type="text" name="Phosphorus" placeholder="Phosphorus" required />
+            <input type="text" name="Potasium" placeholder="Potasium" required />
+            <input type="text" name="Humidity" placeholder="Humidity" required />
+            <input type="text" name="pH" placeholder="pH" required />
+            <input type="text" name="Rainfall" placeholder="Rainfall" required />
+            <input type="text" name="Temperature" placeholder="Temperature" required />
+
+            <button type="submit">Predict</button>
+        </form>
+
+        <h1 id="pred1">{{ Prediction_text }}</h1>
+    </div>
+</body>
+
+
+<script>
+    const form = document.querySelector("form");
+    const button = form.querySelector("button");
+
+    form.addEventListener("submit", () => {
+        button.classList.add("clicked");
+    });
+</script>
+
+</html>
